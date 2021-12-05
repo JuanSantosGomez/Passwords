@@ -9,7 +9,7 @@ from passes.permissions import IsOwner
 
 
 class AccountViewSet(ModelViewSet):
-
+    queryset = Account.objects.none()
     serializer_class = AccountSerializer
     permission_classes = [permissions.IsAuthenticated,
                           IsOwner]
@@ -17,5 +17,5 @@ class AccountViewSet(ModelViewSet):
     # This sets the queryset to be all the accounts associated with the currently logged in user
     def get_queryset(self):
         queryset = Account.objects.filter(user=self.request.user)
+        self.queryset = queryset
         return queryset 
-
