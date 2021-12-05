@@ -17,4 +17,7 @@ class Account(models.Model):
     #metadata
     created = models.DateTimeField(auto_created=True, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.site
     
