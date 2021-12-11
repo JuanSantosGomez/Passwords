@@ -26,6 +26,13 @@ table { border-collapse: collapse; }
   min-width: 50px;
 
 }
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+input::placeholder{
+  color: black;
+}
 .topo{
   position: fixed;
   height:0px;

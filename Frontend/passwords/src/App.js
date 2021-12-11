@@ -1,8 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
+
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faKey } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+
 
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
@@ -14,6 +19,60 @@ function App() {
   const [Alist, setAlist] = useState(
 
     [
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
+      {
+        name:"Google",
+        website:"https://www.google.com",
+        username:"Marco",
+        email:"marco22@gmail.com"
+      },
       {
         name:"Google",
         website:"https://www.google.com",
@@ -80,11 +139,20 @@ function App() {
 
   useEffect(() => {
       const onScroll = () => {
-      if (window.scrollY>document.getElementById('banner').offsetHeight){ 
+      if (window.scrollY>document.getElementById('banner').offsetHeight-50){ 
         setInvert(true)  
+        if (window.scrollY<document.getElementById('banner').offsetHeight){ 
+          window.scrollTo(0,document.getElementById('banner').offsetHeight)
+        }
+
       }
-      if (window.scrollY<=document.getElementById('banner').offsetHeight){ 
+      if (window.scrollY<=document.getElementById('banner').offsetHeight-50){ 
         setInvert(false)  
+        window.scrollTo(
+          0,
+          0
+        )
+        
       }
     }
     window.addEventListener("scroll", onScroll);
@@ -124,10 +192,28 @@ function App() {
     
   }, [])
 
+  const backtobot = () => {
+    window.scrollTo(0,document.getElementById("banner").offsetHeight+10)
+    
+  }
+  const backtotop = () => {
+    window.scrollTo(0,0)
+    
+  }
   return (
     <div id="App" className="App overflow-hidden">
       <div className="flex flex-col bg-yellow-600 w-screen overflow-hidden">
-        <div id="banner" className="flex h-screen overflow-hidden">
+        <div id="banner" className="flex flex-col justify-center h-screen w-screen overflow-hidden">
+
+
+        <div className='h-48 w-48 m-auto flex flex-col justify-items-start'>
+          <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faUser} className='h-6 ml-0 mt-3 mr-2'/><input type="text" placeholder='Username' className='text-sm flex-shrink mb-3 bg-yellow-600 border-b-2 border-black p-2 min-w-0' /></div>
+          <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faKey} className='h-6 ml-0 mt-3 mr-2'/><input type="password" placeholder='Password' className='text-sm flex-shrink mb-10 bg-yellow-600 border-b-2 border-black p-2 min-w-0'/></div>
+          <button onClick={backtobot}>
+            <FontAwesomeIcon icon={faLockOpen} className='w-auto h-full' color="#f1f1f1"/>
+          </button>
+        </div>
+
 
         </div>
 
@@ -142,7 +228,7 @@ function App() {
           </div>
           <div className="flex-grow">
           </div>
-          <FontAwesomeIcon icon={faCoffee} className="w-auto h-full ml-3" size="lg" color="#f1f1f1"/>
+          <FontAwesomeIcon icon={faLock} onClick={backtotop} className="w-auto h-full ml-3 mr-5" size="lg" color="#f1f1f1"/>
         </div>
         
 
