@@ -7,7 +7,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faKey } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
-
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 import { useEffect, useState } from 'react';
@@ -21,6 +20,7 @@ function App() {
     []
 
   )
+ 
   const [authenData, setAuthenData] = useState({
     username:'',
     password:'',
@@ -76,20 +76,38 @@ function App() {
   //   },
     
   // ]
-
+  const baseURL = 'http://192.168.254.116:8000/api/'
   
   const [invert, setInvert] = useState(false)
 
   const backtotop = () => {
     setAlist([])
+    setAuthenData([{
+      username:'',
+      password:'',
+    }])
+    document.getElementById("userform").value=""
+    document.getElementById("passwordform").value=""
+
     logout()
+
     window.scrollTo(0,0)
-    
   }
 
   
 
   useEffect(() => {
+    var input = document.getElementById("passwordform");
+
+    const triggerbtn = (event) => {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById('loginBtn').click();
+      }
+    }
       const onScroll = () => {
       if (window.scrollY>document.getElementById('banner').offsetHeight-50){ 
         setInvert(true)  
@@ -105,14 +123,19 @@ function App() {
       }
     }
     window.addEventListener("scroll", onScroll);
+    input.addEventListener("keyup", triggerbtn);
 
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => { window.removeEventListener("scroll", onScroll); 
+    input.removeEventListener("keyup", triggerbtn);
+  } 
+  });
 
+  
   
 
 	const getItems = () => {
-		axiosInstance.get("account/",{baseURL:"http://127.0.0.1:8000/api/",
+   
+		axiosInstance.get("account/",{baseURL:baseURL,
       timeout:5000,
       headers: {
           Authorization: localStorage.getItem('access_token')
@@ -126,7 +149,9 @@ function App() {
         const allPosts = res.data;
         setAlist(allPosts);
         console.log(res.data);
-      
+        
+        setTimeout(() => {  backtobot() }, 200);
+        
 		})
 	};
 
@@ -153,26 +178,32 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axiosInstance.post(`http://127.0.0.1:8000/api/token/`,{
+    
+    axiosInstance.post(baseURL+`token/`,{
       username: authenData.username,
       password: authenData.password,
     }).then((res)=>{
+      
       localStorage.setItem('access_token', res.data.access);
       localStorage.setItem('refresh_token', res.data.refresh);
-      axiosInstance.defaults.headers['Authorization'] =
-        'JWT ' + localStorage.getItem('access_token');
+      
+     
+     
+      
+
+      getItems()
+        
+  
       
       
-    }).then(()=>{
-      getItems();
-    }).finally(()=>{
-      setTimeout(() => {  backtobot() }, 200);
+      
     })
   }
 
   const logout = () =>{
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+
   }
   
   return (
@@ -184,9 +215,10 @@ function App() {
         <div className='h-48 w-48 m-auto flex flex-col justify-items-start'>
           <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faUser} className='h-6 ml-0 mt-3 mr-2'/><input onChange={logCredentials} id="userform" type="text" placeholder='Username' className='text-sm flex-shrink mb-3 bg-yellow-600 border-b-2 border-black p-2 min-w-0' /></div>
           <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faKey} className='h-6 ml-0 mt-3 mr-2'/><input onChange={logCredentials} id="passwordform" type="password" placeholder='Password' className='text-sm flex-shrink mb-10 bg-yellow-600 border-b-2 border-black p-2 min-w-0'/></div>
-          <button onClick={login}>
+          <button id='loginBtn' type='submit' onClick={login}>
             <FontAwesomeIcon icon={faLockOpen} className='w-auto h-full' color="#f1f1f1"/>
           </button>
+          
         </div>
 
 
@@ -214,7 +246,7 @@ function App() {
           </div>
           <table className='rounded-md bg-gray-800'>
               <tbody>
-              {Alist.map(e=>{ return <AccountLister key={e.user} {...e} />
+              {Alist.map(e=>{ return <AccountLister key={e.id} {...e} />
               })}
               </tbody>
           </table>
@@ -230,10 +262,15 @@ function App() {
 export default App;
 
 let AccountLister = ({site,url,username,email,password}) => {
+  
+  
+
   return (
     <tr className='border-1  w-full overflow-hidden text-white'>
-        <td className='p-2 bg-white icon'>
+        <td className='p-2 bg-white icon' >
+          <button onClick={()=>navigator.clipboard.writeText(password)}>
           <FontAwesomeIcon icon={faGoogle} color='#090909' />
+          </button>
         </td>
         <td className='p-1'>
        
