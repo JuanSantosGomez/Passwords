@@ -21,6 +21,10 @@ function App() {
     []
 
   )
+  const [authenData, setAuthenData] = useState({
+    username:'',
+    password:'',
+  })
   // const objecs = [
   //   { id:1,
   //     name:"Google",
@@ -76,6 +80,12 @@ function App() {
   
   const [invert, setInvert] = useState(false)
 
+  const backtotop = () => {
+    setAlist([])
+    logout()
+    window.scrollTo(0,0)
+    
+  }
 
   
 
@@ -124,26 +134,28 @@ function App() {
     window.scrollTo(0,document.getElementById("banner").offsetHeight+10)
     
   }
-  const backtotop = () => {
-    setAlist([])
-    window.scrollTo(0,0)
-    
-  }
+  
 
   const login = (e) =>{
 
-    
     
     handleSubmit(e);
     
 
   }
 
+  const logCredentials = () =>{
+    setAuthenData({
+      username:document.getElementById("userform").value,
+      password:document.getElementById("passwordform").value
+    })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axiosInstance.post(`http://127.0.0.1:8000/api/token/`,{
-      username: "popotses",
-      password: "qweqweqwe",
+      username: authenData.username,
+      password: authenData.password,
     }).then((res)=>{
       localStorage.setItem('access_token', res.data.access);
       localStorage.setItem('refresh_token', res.data.refresh);
@@ -158,6 +170,11 @@ function App() {
     })
   }
 
+  const logout = () =>{
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+  }
+  
   return (
     <div id="App" className="App overflow-hidden">
       <div className="flex flex-col bg-yellow-600 w-screen overflow-hidden">
@@ -165,8 +182,8 @@ function App() {
 
 
         <div className='h-48 w-48 m-auto flex flex-col justify-items-start'>
-          <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faUser} className='h-6 ml-0 mt-3 mr-2'/><input type="text" placeholder='Username' className='text-sm flex-shrink mb-3 bg-yellow-600 border-b-2 border-black p-2 min-w-0' /></div>
-          <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faKey} className='h-6 ml-0 mt-3 mr-2'/><input type="password" placeholder='Password' className='text-sm flex-shrink mb-10 bg-yellow-600 border-b-2 border-black p-2 min-w-0'/></div>
+          <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faUser} className='h-6 ml-0 mt-3 mr-2'/><input onChange={logCredentials} id="userform" type="text" placeholder='Username' className='text-sm flex-shrink mb-3 bg-yellow-600 border-b-2 border-black p-2 min-w-0' /></div>
+          <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faKey} className='h-6 ml-0 mt-3 mr-2'/><input onChange={logCredentials} id="passwordform" type="password" placeholder='Password' className='text-sm flex-shrink mb-10 bg-yellow-600 border-b-2 border-black p-2 min-w-0'/></div>
           <button onClick={login}>
             <FontAwesomeIcon icon={faLockOpen} className='w-auto h-full' color="#f1f1f1"/>
           </button>
