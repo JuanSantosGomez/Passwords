@@ -146,13 +146,16 @@ function App() {
       }
 
     }).then((res) => {
-        const allPosts = res.data;
-        setAlist(allPosts);
-        console.log(res.data);
+      
+      const allPosts = res.data;
+      setAlist(allPosts);
+      console.log(res.data);
+      setTimeout(() => {  backtobot() }, 200);
+      
         
-        setTimeout(() => {  backtobot() }, 200);
-        
-		})
+		}).catch((err)=>{
+      buttonshake()
+    })
 	};
 
   const backtobot = () => {
@@ -163,7 +166,7 @@ function App() {
 
   const login = (e) =>{
 
-    
+    document.getElementById("loginBtn").classList.remove("shaker")
     handleSubmit(e);
     
 
@@ -187,19 +190,20 @@ function App() {
       localStorage.setItem('access_token', res.data.access);
       localStorage.setItem('refresh_token', res.data.refresh);
       
-     
-     
-      
-
       getItems()
         
-  
       
       
+      
+      
+    }).catch((err)=>{
+      buttonshake()
       
     })
   }
-
+  const buttonshake = () =>{
+    document.getElementById("loginBtn").classList.toggle("shaker")
+  }
   const logout = () =>{
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
@@ -215,7 +219,7 @@ function App() {
         <div className='h-48 w-48 m-auto flex flex-col justify-items-start'>
           <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faUser} className='h-6 ml-0 mt-3 mr-2'/><input onChange={logCredentials} id="userform" type="text" placeholder='Username' className='text-sm flex-shrink mb-3 bg-yellow-600 border-b-2 border-black p-2 min-w-0' /></div>
           <div className='flex flex-row justify-items-center text-black'><FontAwesomeIcon icon={faKey} className='h-6 ml-0 mt-3 mr-2'/><input onChange={logCredentials} id="passwordform" type="password" placeholder='Password' className='text-sm flex-shrink mb-10 bg-yellow-600 border-b-2 border-black p-2 min-w-0'/></div>
-          <button id='loginBtn' type='submit' onClick={login}>
+          <button id='loginBtn' className='logger' type='submit' onClick={login}>
             <FontAwesomeIcon icon={faLockOpen} className='w-auto h-full' color="#f1f1f1"/>
           </button>
           
