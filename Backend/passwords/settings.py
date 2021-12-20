@@ -170,8 +170,8 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
+    'SIGNING_KEY': 'sikrit',
+    'VERIFYING_KEY': 'sikrit',
     'AUDIENCE': None,
     'ISSUER': None,
     'JWK_URL': None,

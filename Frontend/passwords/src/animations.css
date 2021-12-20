@@ -1,0 +1,51 @@
+@keyframes shake {
+    0%{
+      transform: translateX(4px);
+  
+    }
+    10%, 90% {
+      transform: translateX(-4px);
+    }
+    
+    20%, 80% {
+      transform: translateX(3px);
+    }
+  
+    30%, 50%, 70% {
+      transform: translateX(-2px);
+    }
+  
+    40%, 60% {
+      transform: translateX(4px);
+    }
+  }
+
+  @keyframes move {
+    from { transform: translateY(-200px); opacity: 0;}
+    to   { transform: translateY(0px); opacity: 1;}
+  }
+
+  @keyframes moveup {
+    from { transform: translateY(50px); opacity: 0;}
+    to   { transform: translateY(0px); opacity: 1;}
+  }
+
+
+  .logger.shaker{
+    animation: shake 0.32s cubic-bezier(.36,.07,.19,.97);
+    /* transform: translate3d(0, 0, 0); */
+  }
+
+  .anim1{
+    animation: move 0.43s cubic-bezier(.36,.07,.19,.97);
+  }
+  .anim2{
+    animation: move 0.34s cubic-bezier(.36,.07,.19,.97);
+  }
+  .anim3{
+    animation: move 0.22s cubic-bezier(.36,.07,.19,.97);
+  }
+
+  .anim4{
+    animation: moveup 0.63s cubic-bezier(.36,.07,.19,.97);
+  }
