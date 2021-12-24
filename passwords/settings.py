@@ -79,7 +79,7 @@ ROOT_URLCONF = 'passwords.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,13 +108,13 @@ DATABASES = {
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
-STATIC_URL = '/public/'
+STATIC_URL = '/static/'
 #location where django collect all static files
-STATIC_ROOT = os.path.join(BASE_DIR,'public')
-# location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'/public')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static')
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
