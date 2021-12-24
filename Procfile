@@ -1,2 +1,3 @@
 release: python manage.py migrate
-web: gunicorn passwords.wsgi --log-file -
+api: gunicorn passwords.wsgi --log-file -
+web: npm start
