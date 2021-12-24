@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.8",
-    "postcss": "^7.0.39",
+    "postcss": "^7.0.39"
   },
   "engines": {
     "node": "16.13.1",
