@@ -21,6 +21,9 @@ const baseURL = 'http://localhost:8000/api/'
 
 
 function App() {
+  axiosInstance.defaults.xsrfCookieName = 'csrftoken'
+  axiosInstance.defaults.xsrfHeaderName = 'X-CSRFToken'
+
   const [loggedUser,setLoggedUser] = useState(null)
   const [Alist, setAlist] = useState([])
   const [authenData, setAuthenData] = useState({username:'',password:'',})
